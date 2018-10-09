@@ -8,6 +8,7 @@ namespace Sweepstakes_System
 {
     class SweepstakesQueueManager : ISweepstakesManager
     {
+        Queue<Contestant> contestants = new Queue<Contestant>();
         public void InsertSweepstakes(Sweepstakes sweepstakes)
         {
 
