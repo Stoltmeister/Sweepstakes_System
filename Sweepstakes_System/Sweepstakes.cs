@@ -8,21 +8,34 @@ namespace Sweepstakes_System
 {
     class Sweepstakes
     {
-        Dictionary<string, string> Contestants = new Dictionary<string, string>();
+        string name;
+        Dictionary<int, Contestant> contestants = new Dictionary<int, Contestant>();
 
         public Sweepstakes(string name)
         {
-
+            this.name = name;
         }
 
         private void RegisterContestant(Contestant contestant)
         {
 
         }
+        public IEnumerable<TValue> RandomValues<TKey, TValue>(IDictionary<TKey, TValue> dict)
+        {
+            Random rand = new Random();
+            List<TValue> contestants = Enumerable.ToList(dict.Values);
+            int size = dict.Count;
+            yield return contestants[rand.Next(size)];            
+        }
 
         private string PickWinner()
-        {
-            return "";
+        {            
+            Contestant winner = new Contestant();
+            foreach (Contestant contestant in RandomValues(contestants).Take(1))
+            {
+                winner = contestant;
+            }
+            return winner.FirstName;
         }
 
         private void PrintContestantInfo(Contestant contestant)
