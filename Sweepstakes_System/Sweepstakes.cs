@@ -27,7 +27,9 @@ namespace Sweepstakes_System
 
         private void PrintContestantInfo(Contestant contestant)
         {
-
+            Console.WriteLine("Name: " + contestant.FirstName + " " + contestant.LastName + "\n");
+            Console.WriteLine("Email: " + contestant.Email + "\n");
+            Console.WriteLine("Registration # : " + contestant.RegistrationNum + "\n");
         }
     }
 }
