@@ -18,7 +18,7 @@ namespace Sweepstakes_System
             firstName = UserInterface.GetInput("Please enter the contestant's first name: ");
             firstName = UserInterface.GetInput("Please enter the contestant's last name: ");
             email = UserInterface.GetInput("Please enter the contestant's email address: ");
-            registrationNum = Int32.Parse(UserInterface.GetInput("Please enter the registration Number: "));
+            registrationNum = int.Parse(UserInterface.GetInput("Please enter the registration Number: "));
         }
 
         public string FirstName

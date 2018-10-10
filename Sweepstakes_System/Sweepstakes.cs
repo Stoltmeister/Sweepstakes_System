@@ -9,11 +9,14 @@ namespace Sweepstakes_System
     class Sweepstakes
     {
         string name;
-        Dictionary<int, Contestant> contestants = new Dictionary<int, Contestant>();
+        Contestant winner;
+        Dictionary<string, Contestant> allContestants;
 
         public Sweepstakes(string name)
         {
             this.name = name;
+            Contestant winner = new Contestant();
+            Dictionary<string, Contestant> allContestants = new Dictionary<string, Contestant>();
         }
 
         private void RegisterContestant(Contestant contestant)
@@ -29,9 +32,8 @@ namespace Sweepstakes_System
         }
 
         private string PickWinner()
-        {            
-            Contestant winner = new Contestant();
-            foreach (Contestant contestant in RandomValues(contestants).Take(1))
+        {                        
+            foreach (Contestant contestant in RandomValues(allContestants).Take(1))
             {
                 winner = contestant;
             }
