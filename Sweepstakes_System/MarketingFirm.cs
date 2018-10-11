@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using System.Net;
 using System.Net.Mail;
 
+
 namespace Sweepstakes_System
 {
     class MarketingFirm
     {
         ISweepstakesManager manager;
-        SmtpClient client = new SmtpClient();
+        SmtpClient client = new SmtpClient("smtp.gmail.com");
         
         public MarketingFirm(ISweepstakesManager manager)
         {
@@ -32,6 +33,7 @@ namespace Sweepstakes_System
             DisplayWelcome();
             do
             {
+
                 Console.WriteLine("Lets create a Sweepstakes! \n");
                 manager.InsertSweepstakes(CreateSweepstakes());
                 if (UserInterface.GetInput("Create more Sweepstakes?  ('Y' or 'N') \n").ToLower() == "n")
@@ -71,10 +73,14 @@ namespace Sweepstakes_System
 
         private void RunSweepstakes(Sweepstakes sweepstakes)
         {            
-            Console.WriteLine("Lets pick a winner for " + sweepstakes.Name +"\n");
+            Console.WriteLine("Lets pick a winner for " + sweepstakes.Name +". Are you ready? (any key to continue) \n");
+            Console.ReadLine();
             sweepstakes.PickWinner();
-            Console.WriteLine("The winner of " + sweepstakes.Name + "is ");
-            sweepstakes.PrintContestantInfo(sweepstakes.Winner);            
+            Console.WriteLine("The winner of " + sweepstakes.Name + " is ");
+            sweepstakes.PrintContestantInfo(sweepstakes.Winner);
+            Console.WriteLine("Emailing the winner.");
+            Console.ReadLine();
+            EmailWinner(sweepstakes);
         }
 
         private Sweepstakes CreateSweepstakes()
@@ -98,16 +104,21 @@ namespace Sweepstakes_System
 
         public void EmailWinner(Sweepstakes sweepstakes)
         {
-            MailAddress from = new MailAddress("jane@contoso.com", sweepstakes.Name + " ", Encoding.UTF8);
-            MailAddress to = new MailAddress(sweepstakes.Winner.Email);
-            MailMessage message = new MailMessage(from, to);
-            message.Body = "Congratulations " + sweepstakes.Winner.FirstName + " " + "you won the sweepstakes! \n";
-            message.BodyEncoding = Encoding.UTF8;
-            message.Subject = "You're a winner!";
-            message.SubjectEncoding = Encoding.UTF8;
-            client.SendAsync(message, "test");
-            message.Dispose();
-            Console.WriteLine("Completed");
+            // works but I took out the password cause I probably don't want that public ;)
+
+            MailMessage mail = new MailMessage();
+            SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+
+            mail.From = new MailAddress("stoltenberg96@gmail.com");
+            mail.To.Add(sweepstakes.Winner.Email);
+            mail.Subject = "You won " + sweepstakes.Name + "!";
+            mail.Body = "Congratulations " + sweepstakes.Winner.FirstName + " you won the sweepstakes!";
+
+            SmtpServer.Port = 587;
+            SmtpServer.Credentials = new System.Net.NetworkCredential("stoltenberg96@gmail.com", "password");
+            SmtpServer.EnableSsl = true;
+
+            SmtpServer.Send(mail);
         }
     }
 }
