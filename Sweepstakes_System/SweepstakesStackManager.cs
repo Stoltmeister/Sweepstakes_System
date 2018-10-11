@@ -15,12 +15,13 @@ namespace Sweepstakes_System
         {
             Stack<Sweepstakes> allSweepstakes = new Stack<Sweepstakes>();
         }
+
         public void InsertSweepstakes(Sweepstakes sweepstakes)
         {
             allSweepstakes.Push(sweepstakes);
         }
         public Sweepstakes GetSweepstakes()
-        {            
+        { 
             return allSweepstakes.Pop();
         }
     }

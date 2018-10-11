@@ -20,27 +20,47 @@ namespace Sweepstakes_System
             string message = "";
             Console.WriteLine(message);
         }
-        
+
 
         public void RunFirm()
         {
-            bool gettingSweepstakes = true;            
+            bool gettingSweepstakes = true;
+            bool runningSweepstakes = true;
             do
             {
-                Console.WriteLine("Lets create your first Sweepstakes \n");
+                Console.WriteLine("Lets create a Sweepstakes \n");
                 manager.InsertSweepstakes(CreateSweepstakes());
                 if (UserInterface.GetInput("Create more Sweepstakes?  ('Y' or 'N') \n").ToLower() == "n")
                 {
                     gettingSweepstakes = false;
                 }
             } while (gettingSweepstakes);
-           
 
+            do
+            {                 
+                Console.WriteLine("Lets run a sweepstakes! \n");
+                try
+                {
+                    RunSweepstakes(manager.GetSweepstakes());
+                }
+                catch (Exception)
+                {
+                    Console.Clear();
+                    Console.WriteLine("No more Sweepstakes!");
+                }
+                if (UserInterface.GetInput("Run another sweepstakes? ('Y' or 'N' \n").ToLower() == "n")
+                {
+                    runningSweepstakes = false;
+                }                
+            } while (runningSweepstakes);
         }
 
-        private void RunSweepstakes()
-        {
-            
+        private void RunSweepstakes(Sweepstakes sweepstakes)
+        {            
+            Console.WriteLine("Lets pick a winner for " + sweepstakes.Name +"\n");
+            sweepstakes.PickWinner();
+            Console.WriteLine("The winner of " + sweepstakes.Name + "is ");
+            sweepstakes.PrintContestantInfo(sweepstakes.Winner);            
         }
 
         private Sweepstakes CreateSweepstakes()
@@ -54,14 +74,13 @@ namespace Sweepstakes_System
                 newContestant.SetContestant();
                 newSweepstakes.RegisterContestant(newContestant);
 
-                if (UserInterface.GetInput("Add more contestants? ('Y' or 'N') \n").ToLower() == "y")
+                if (UserInterface.GetInput("Add more contestants? ('Y' or 'N') \n").ToLower() == "n")
                 {
                     enteringContestants = false;
                 }
             }
-                  
             return newSweepstakes;
         }
-        
+
     }
 }

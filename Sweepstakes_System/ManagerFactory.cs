@@ -6,23 +6,25 @@ using System.Threading.Tasks;
 
 namespace Sweepstakes_System
 {
-    class ManagerFactory
+    static class ManagerFactory
     {
-        private static ISweepstakesManager GetManager()
+        public static ISweepstakesManager GetManager()
         {
             // dependency injection needed
             // probably not needed until methods implemented
+            ISweepstakesManager manager;
             switch (UserInterface.GetInput("Enter '1' if you would like to use the StackManager or '2' if you would like to use the QueueManager \n"))
             {
                 case "1":
-                    SweepstakesStackManager stackSweep = new SweepstakesStackManager();
-                    return stackSweep;
+                    manager = new SweepstakesStackManager();
+                    return manager;
                 case "2":
-                    SweepstakesQueueManager queueSweep = new SweepstakesQueueManager();
-                    return queueSweep;
+                    manager = new SweepstakesQueueManager();
+                    return manager;
                 default:
-                    // input checking?
-                    return new SweepstakesStackManager();
+                    Console.Clear();
+                    Console.WriteLine("Please enter correct input! \n");
+                    return GetManager();                    
             }
         }
     }

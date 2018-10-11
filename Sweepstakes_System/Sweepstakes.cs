@@ -16,7 +16,16 @@ namespace Sweepstakes_System
         {
             this.name = name;
             Contestant winner = new Contestant();
-            Dictionary<string, Contestant> allContestants = new Dictionary<string, Contestant>();
+            allContestants = new Dictionary<string, Contestant>();
+        }
+
+        public string Name
+        {
+            get => name;
+        }
+        public Contestant Winner
+        {
+            get => winner;
         }
 
         public void RegisterContestant(Contestant contestant)
