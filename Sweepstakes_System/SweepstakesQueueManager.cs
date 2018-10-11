@@ -12,7 +12,7 @@ namespace Sweepstakes_System
 
         public SweepstakesQueueManager()
         {
-            Queue<Sweepstakes> allSweepstakes = new Queue<Sweepstakes>();
+            allSweepstakes = new Queue<Sweepstakes>();
         }
 
         public void InsertSweepstakes(Sweepstakes sweepstakes)

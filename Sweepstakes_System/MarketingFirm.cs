@@ -20,7 +20,7 @@ namespace Sweepstakes_System
 
         private static void DisplayWelcome()
         {
-            string message = "";
+            string message = "Welcome to the Marketing Firm. This application will allow you to create and run sweepstakes with the manager you chose. \n";
             Console.WriteLine(message);
         }
 
@@ -29,10 +29,10 @@ namespace Sweepstakes_System
         {
             bool gettingSweepstakes = true;
             bool runningSweepstakes = true;
-
+            DisplayWelcome();
             do
             {
-                Console.WriteLine("Lets create a Sweepstakes \n");
+                Console.WriteLine("Lets create a Sweepstakes! \n");
                 manager.InsertSweepstakes(CreateSweepstakes());
                 if (UserInterface.GetInput("Create more Sweepstakes?  ('Y' or 'N') \n").ToLower() == "n")
                 {
@@ -50,8 +50,17 @@ namespace Sweepstakes_System
                 catch (Exception)
                 {
                     Console.Clear();
-                    Console.WriteLine("No more Sweepstakes!");
-                    
+                    if (UserInterface.GetInput("No more Sweepstakes! Would you like to create more? ('Y' or 'N')").ToLower() == "n")
+                    {
+                        Console.WriteLine("Ok Goodbye (Any key to exit)");
+                        Console.ReadLine();
+                        return;
+                    }
+                    else
+                    {
+                        RunFirm();
+                        return;
+                    }
                 }
                 if (UserInterface.GetInput("Run another sweepstakes? ('Y' or 'N' \n").ToLower() == "n")
                 {

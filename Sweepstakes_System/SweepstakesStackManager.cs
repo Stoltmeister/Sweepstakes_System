@@ -13,7 +13,7 @@ namespace Sweepstakes_System
 
         public SweepstakesStackManager()
         {
-            Stack<Sweepstakes> allSweepstakes = new Stack<Sweepstakes>();
+           allSweepstakes = new Stack<Sweepstakes>();
         }
 
         public void InsertSweepstakes(Sweepstakes sweepstakes)

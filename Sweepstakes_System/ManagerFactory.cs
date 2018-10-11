@@ -13,7 +13,7 @@ namespace Sweepstakes_System
             // dependency injection needed
             // probably not needed until methods implemented
             ISweepstakesManager manager;
-            switch (UserInterface.GetInput("Enter '1' if you would like to use the StackManager or '2' if you would like to use the QueueManager \n"))
+            switch (UserInterface.GetInput("Enter '1' if you would like to use the StackManager or '2' if you would like to use the QueueManager."))
             {
                 case "1":
                     manager = new SweepstakesStackManager();
