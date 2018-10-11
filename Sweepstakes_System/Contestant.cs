@@ -39,7 +39,7 @@ namespace Sweepstakes_System
         }
         public void Notify(IUser winner)
         {
-            Console.WriteLine("The Sweepstakes has concluded. The winner is " + winner.FirstName);
+            Console.WriteLine("The Sweepstakes has concluded. The winner is " + winner.FirstName + "\n");
         }
     }
 }

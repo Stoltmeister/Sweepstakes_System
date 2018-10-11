@@ -128,7 +128,7 @@ namespace Sweepstakes_System
             {
                 if (contestant.Value == sweepstakes.Winner)
                 {
-                    Console.WriteLine("The Sweepstakes has concluded. YOU WON POGGERS!");
+                    Console.WriteLine("The Sweepstakes has concluded. YOU WON POGGERS! \n");
                 }
                 else
                 {
