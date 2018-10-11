@@ -13,7 +13,7 @@ namespace Sweepstakes_System
     {
         ISweepstakesManager manager;
         SmtpClient client = new SmtpClient("smtp.gmail.com");
-        
+
         public MarketingFirm(ISweepstakesManager manager)
         {
             this.manager = manager;
@@ -43,7 +43,7 @@ namespace Sweepstakes_System
             } while (gettingSweepstakes);
 
             do
-            {                 
+            {
                 Console.WriteLine("Lets run a sweepstakes! \n");
                 try
                 {
@@ -67,16 +67,17 @@ namespace Sweepstakes_System
                 if (UserInterface.GetInput("Run another sweepstakes? ('Y' or 'N' \n").ToLower() == "n")
                 {
                     runningSweepstakes = false;
-                }                
+                }
             } while (runningSweepstakes);
         }
 
         private void RunSweepstakes(Sweepstakes sweepstakes)
-        {            
-            Console.WriteLine("Lets pick a winner for " + sweepstakes.Name +". Are you ready? (any key to continue) \n");
+        {
+            Console.WriteLine("Lets pick a winner for " + sweepstakes.Name + ". Are you ready? (any key to continue) \n");
             Console.ReadLine();
             sweepstakes.PickWinner();
-            Console.WriteLine("The winner of " + sweepstakes.Name + " is ");
+            NotifyUsers(sweepstakes);
+            //Console.WriteLine("The winner of " + sweepstakes.Name + " is ");
             sweepstakes.PrintContestantInfo(sweepstakes.Winner);
             Console.WriteLine("Emailing the winner.");
             Console.ReadLine();
@@ -119,6 +120,22 @@ namespace Sweepstakes_System
             SmtpServer.EnableSsl = true;
 
             SmtpServer.Send(mail);
+        }
+
+        public void NotifyUsers(Sweepstakes sweepstakes)
+        {
+            foreach (KeyValuePair<int, Contestant> contestant in sweepstakes.AllContestants)
+            {
+                if (contestant.Value == sweepstakes.Winner)
+                {
+                    Console.WriteLine("The Sweepstakes has concluded. YOU WON POGGERS!");
+                }
+                else
+                {
+                    contestant.Value.Notify(sweepstakes.Winner);
+                }
+            }
+
         }
     }
 }

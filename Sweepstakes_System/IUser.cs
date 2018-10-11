@@ -8,6 +8,7 @@ namespace Sweepstakes_System
 {
     interface IUser
     {
-        void Notify(IUser user);
+        string FirstName { get; }
+        void Notify(IUser winner);
     }
 }

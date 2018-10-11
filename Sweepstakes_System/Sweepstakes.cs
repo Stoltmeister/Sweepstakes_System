@@ -19,6 +19,11 @@ namespace Sweepstakes_System
             allContestants = new Dictionary<int, Contestant>();
         }
 
+        public Dictionary<int, Contestant> AllContestants
+        {
+            get => allContestants;
+        }
+
         public string Name
         {
             get => name;
