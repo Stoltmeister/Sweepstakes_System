@@ -1,0 +1,16 @@
+Sweepstakes_System:
+
+Program
+
+MarketingFirm ---- UserInterface
+
+SweepstakesStack/QueueManager
+
+Sweepstakes
+
+Contestants
+
+To Do:
+
+- Application Flow in RunFirm()
+- 

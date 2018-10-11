@@ -19,9 +19,11 @@ namespace Sweepstakes_System
             Dictionary<string, Contestant> allContestants = new Dictionary<string, Contestant>();
         }
 
-        private void RegisterContestant(Contestant contestant)
+        public void RegisterContestant(Contestant contestant)
         {
-
+            allContestants.Add(contestant.FirstName, contestant);
+            Console.WriteLine("Contestant added! \n");
+            PrintContestantInfo(contestant);
         }
         public IEnumerable<TValue> RandomValues<TKey, TValue>(IDictionary<TKey, TValue> dict)
         {
@@ -31,7 +33,7 @@ namespace Sweepstakes_System
             yield return contestants[rand.Next(size)];            
         }
 
-        private string PickWinner()
+        public string PickWinner()
         {                        
             foreach (Contestant contestant in RandomValues(allContestants).Take(1))
             {
@@ -40,7 +42,7 @@ namespace Sweepstakes_System
             return winner.FirstName;
         }
 
-        private void PrintContestantInfo(Contestant contestant)
+        public void PrintContestantInfo(Contestant contestant)
         {
             Console.WriteLine("Name: " + contestant.FirstName + " " + contestant.LastName + "\n");
             Console.WriteLine("Email: " + contestant.Email + "\n");
