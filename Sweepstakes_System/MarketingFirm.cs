@@ -10,8 +10,9 @@ namespace Sweepstakes_System
     {
         ISweepstakesManager manager;
 
-        public MarketingFirm()
-        {            
+        public MarketingFirm(ISweepstakesManager manager)
+        {
+            this.manager = manager;
         }
 
         private static void DisplayWelcome()
@@ -19,35 +20,33 @@ namespace Sweepstakes_System
             string message = "";
             Console.WriteLine(message);
         }
-
-        private static ISweepstakesManager GetManager()
-        {
-            // dependency injection needed
-            // probably not needed until methods implemented
-            switch (UserInterface.GetInput("Enter '1' if you would like to use the StackManager or '2' if you would like to use the QueueManager \n"))
-            {
-                case "1": SweepstakesStackManager stackSweep = new SweepstakesStackManager();
-                    return stackSweep;
-                case "2": SweepstakesQueueManager queueSweep = new SweepstakesQueueManager();
-                    return queueSweep;
-                default:
-                    // input checking?
-                    return new SweepstakesStackManager();
-            }
-        }
+        
 
         public void RunFirm()
         {
-            manager = GetManager();
-            Console.WriteLine("Lets create your first Sweepstakes \n");
-            CreateSweepstakes();
+            bool gettingSweepstakes = true;            
+            do
+            {
+                Console.WriteLine("Lets create your first Sweepstakes \n");
+                manager.InsertSweepstakes(CreateSweepstakes());
+                if (UserInterface.GetInput("Create more Sweepstakes?  ('Y' or 'N') \n").ToLower() == "n")
+                {
+                    gettingSweepstakes = false;
+                }
+            } while (gettingSweepstakes);
+           
 
+        }
+
+        private void RunSweepstakes()
+        {
+            
         }
 
         private Sweepstakes CreateSweepstakes()
         {
             bool enteringContestants = true;
-            Sweepstakes newSweepstakes = new Sweepstakes(UserInterface.GetInput("What name would you like for this Sweepstakes?"));
+            Sweepstakes newSweepstakes = new Sweepstakes(UserInterface.GetInput("What name would you like for this Sweepstakes? \n"));
             Console.WriteLine("Please enter your contestants: \n");
             while (enteringContestants)
             {
@@ -55,7 +54,7 @@ namespace Sweepstakes_System
                 newContestant.SetContestant();
                 newSweepstakes.RegisterContestant(newContestant);
 
-                if (UserInterface.GetInput("Add more contestants? ('Y' or 'N')").ToLower() == "y")
+                if (UserInterface.GetInput("Add more contestants? ('Y' or 'N') \n").ToLower() == "y")
                 {
                     enteringContestants = false;
                 }
