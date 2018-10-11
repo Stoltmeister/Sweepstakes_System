@@ -10,13 +10,13 @@ namespace Sweepstakes_System
     {
         string name;
         Contestant winner;
-        Dictionary<string, Contestant> allContestants;
+        Dictionary<int, Contestant> allContestants;
 
         public Sweepstakes(string name)
         {
             this.name = name;
             Contestant winner = new Contestant();
-            allContestants = new Dictionary<string, Contestant>();
+            allContestants = new Dictionary<int, Contestant>();
         }
 
         public string Name
@@ -30,7 +30,7 @@ namespace Sweepstakes_System
 
         public void RegisterContestant(Contestant contestant)
         {
-            allContestants.Add(contestant.FirstName, contestant);
+            allContestants.Add(contestant.RegistrationNum, contestant);
             Console.WriteLine("Contestant added! \n");
             PrintContestantInfo(contestant);
         }

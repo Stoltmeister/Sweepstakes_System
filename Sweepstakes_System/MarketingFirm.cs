@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net;
+using System.Net.Mail;
 
 namespace Sweepstakes_System
 {
     class MarketingFirm
     {
         ISweepstakesManager manager;
-
+        SmtpClient client = new SmtpClient();
+        
         public MarketingFirm(ISweepstakesManager manager)
         {
             this.manager = manager;
@@ -26,6 +29,7 @@ namespace Sweepstakes_System
         {
             bool gettingSweepstakes = true;
             bool runningSweepstakes = true;
+
             do
             {
                 Console.WriteLine("Lets create a Sweepstakes \n");
@@ -47,6 +51,7 @@ namespace Sweepstakes_System
                 {
                     Console.Clear();
                     Console.WriteLine("No more Sweepstakes!");
+                    
                 }
                 if (UserInterface.GetInput("Run another sweepstakes? ('Y' or 'N' \n").ToLower() == "n")
                 {
@@ -82,5 +87,18 @@ namespace Sweepstakes_System
             return newSweepstakes;
         }
 
+        public void EmailWinner(Sweepstakes sweepstakes)
+        {
+            MailAddress from = new MailAddress("jane@contoso.com", sweepstakes.Name + " ", Encoding.UTF8);
+            MailAddress to = new MailAddress(sweepstakes.Winner.Email);
+            MailMessage message = new MailMessage(from, to);
+            message.Body = "Congratulations " + sweepstakes.Winner.FirstName + " " + "you won the sweepstakes! \n";
+            message.BodyEncoding = Encoding.UTF8;
+            message.Subject = "You're a winner!";
+            message.SubjectEncoding = Encoding.UTF8;
+            client.SendAsync(message, "test");
+            message.Dispose();
+            Console.WriteLine("Completed");
+        }
     }
 }
